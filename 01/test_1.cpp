@@ -1,5 +1,5 @@
 #include <iostream>
-#include "task_1.cpp"
+#include "task_1.h"
 using namespace std;
 
 int main(){
@@ -20,6 +20,7 @@ int main(){
         cout<<"Wrong 2"<<endl;
     else
         cout<<"OK 2"<<endl;
+
     //test3
     X.makeAllocator(1000);
     X.alloc(5);
