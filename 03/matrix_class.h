@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-struct Row{
+class Row{
 
 private:
 
@@ -12,15 +12,15 @@ private:
 public:
 
     ~Row(){
-        if (x!=nullptr)
+        if (x != nullptr)
             delete[] x;
     };
 
     int getRowSize() const;
 
-    void setLength(const int& n);
+    void setLength(const int n);
 
-    int& operator[](const int& i);
+    int& operator[](const int i);
 
 };
 
@@ -28,26 +28,26 @@ class Matrix{
 
 private:
 
-    Row* rows=nullptr;
-    int high=0;
+    Row* rows = nullptr;
+    int high = 0;
 
 public:
 
-    Matrix(const int& n, const int& l){
+    Matrix(const int n, const int l){
         rows = new Row[n];
-        for (int i=0; i<n; i++)
+        for (int i = 0; i < n; i++)
             rows[i].setLength(l);
         high = n;
     };
 
     ~Matrix(){
-        if (rows!=nullptr)
+        if (rows != nullptr)
             delete[] rows;
     };
 
-    Row& operator[](const int& i);
+    Row& operator[](const int i);
 
-    void operator*=(const int& k);
+    void operator*=(const int k);
 
     bool operator==(const Matrix& m);
 
