@@ -6,8 +6,8 @@ class Row{
 
 private:
 
-    int* x=nullptr;
-    int length=0;
+    int* x = nullptr;
+    int length = 0;
 
 public:
 
@@ -47,13 +47,13 @@ public:
 
     Row& operator[](const int i);
 
-    void operator*=(const int k);
+    Matrix& operator *= (const int k);
 
-    bool operator==(const Matrix& m);
+    bool operator == (const Matrix& m) const;
 
-    bool operator!=(const Matrix& m);
+    bool operator != (const Matrix& m) const;
 
-    Matrix operator+(const Matrix& m);
+    Matrix operator + (const Matrix& m);
 
     friend ostream& operator<<(ostream& ostream, const Matrix& m);
 

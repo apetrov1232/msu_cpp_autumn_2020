@@ -3,15 +3,15 @@
 int main(){
     //test1
     Matrix m(10, 5);
-    if (m.getRows()== 10 && m.getColumns()==5)
+    if (m.getRows() == 10 && m.getColumns() == 5)
         cout<<"OK 1"<<endl;
     else
         cout<<"Wrong 1"<<endl;
     //test2
     m[0][0] = 3;
     m[0][1] = 2;
-    m*=5;
-    if (m[0][0]==15 && m[0][1]==10)
+    m *= 5;
+    if (m[0][0] == 15 && m[0][1] == 10)
         cout<<"OK 2"<<endl;
     else
         cout<<"Wrong 2"<<endl;
@@ -23,7 +23,7 @@ int main(){
         cout<<"Wrong 3"<<endl;
     //test4
     m2[0][0] = 15; m2[0][1] = 10;
-    if (m2==m)
+    if (m2 == m)
         cout<<"OK 4"<<endl;
     else
         cout<<"Wrong 4"<<endl;
@@ -41,8 +41,8 @@ int main(){
         cout<<"Wrong 5"<<endl;
     //test6
     Matrix M = m + m2;
-    m*=2;
-    if (M==m)
+    m *= 2;
+    if (M == m)
         cout<<"OK 6"<<endl;
     else
         cout<<"Wrong 6"<<endl;
@@ -58,7 +58,7 @@ int main(){
     while(fin.getline(c, 70))
         s += string(c) + "/n";
     fin.close();
-    if (s=="30 20 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n")
+    if (s == "30 20 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n0 0 0 0 0 /n")
         cout<<"OK 7"<<endl;
     else
         cout<<"Wrong 7"<<endl;
@@ -71,7 +71,7 @@ int main(){
     //test9
     err = 0;
     try{
-        m3+M;
+        m3 + M;
     }
     catch(...){
         err = 1;
@@ -80,6 +80,13 @@ int main(){
         cout<<"OK 9"<<endl;
     else
         cout<<"Wrong 9"<<endl;
+
+    //test10
+    (m *= 2) *= 3;
+    if (m[0][0] == 180)
+        cout<<"OK 10"<<endl;
+    else
+        cout<<"Wrong 10"<<endl;
 
     return 0;
 }

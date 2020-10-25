@@ -28,14 +28,15 @@ Row& Matrix::operator[](const int i){
     return rows[i];
 };
 
-void Matrix::operator*=(const int k){
+Matrix& Matrix::operator *= (const int k){
     for (int i = 0; i < getRows(); i++)
         for (int j = 0; j < getColumns(); j++)
-            rows[i][j]*=k;
+            rows[i][j] *= k;
+    return *this;
 };
 
-bool Matrix::operator==(const Matrix& m){
-    if (getRows() != m.getRows() || getColumns()!=m.getColumns())
+bool Matrix::operator == (const Matrix& m) const{
+    if (getRows() != m.getRows() || getColumns() != m.getColumns())
         return false;
     for (int i = 0; i < getRows(); i++)
         for (int j = 0; j < getColumns(); j++)
@@ -44,12 +45,12 @@ bool Matrix::operator==(const Matrix& m){
     return true;
 };
 
-bool Matrix::operator!=(const Matrix& m){
+bool Matrix::operator != (const Matrix& m) const{
     return !(*this == m);
 };
 
-Matrix Matrix::operator+(const Matrix& m){
-    if (getRows() != m.getRows() || getColumns()!=m.getColumns())
+Matrix Matrix::operator + (const Matrix& m){
+    if (getRows() != m.getRows() || getColumns() != m.getColumns())
         throw out_of_range(""); //incorrect case
     Matrix tmp(m.getRows(),m.getColumns());
     for (int i = 0; i < m.getRows(); i++)
