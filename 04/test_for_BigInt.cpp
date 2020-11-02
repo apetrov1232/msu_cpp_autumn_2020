@@ -38,7 +38,7 @@ int main(){
     if (G == 40 && F == (G - 10))
         std::cout<<"OK 5"<<std::endl;
     else
-        std::cout<<"Wrong 5"<<" "<<G-10<<" "<<F<<std::endl;
+        std::cout<<"Wrong 5"<<std::endl;
     //test6
     if ((P > Y) && (-Y == -9) && (Y + G == 49) && ((-P - G) == -607) && (Y * G == 360) && ((Y * W - F + P) == -4458))
         std::cout<<"OK 6"<<std::endl;
