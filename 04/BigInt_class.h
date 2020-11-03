@@ -10,7 +10,7 @@ class BigInt{
 
 private:
 
-    int* val = nullptr; // value = val[0] * 10^(C*size_) + val[1] * 10^(C*(size_ - 1)) + ...
+    int* val = nullptr; // value = val[0] + val[1] * 10^C + val[1] * 10^(2*C) + ...
 
     int size_ = 0;
 
