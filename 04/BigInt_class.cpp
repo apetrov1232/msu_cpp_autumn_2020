@@ -79,6 +79,7 @@ bool BigInt::operator == (const int x) const{
     for (int i = 0; i < size_; i++)
         if (val[i] != other.val[i])
             return false;
+
     return true;
 };
 
@@ -123,8 +124,8 @@ BigInt BigInt::operator+(const BigInt& other){//O(max(n1,n2))
         res = 0;
         for (int i=0; i < std::min(size_, other.size_); i++){
             tmp = val[i] + other.val[i] + res;
-            res = tmp / 10;
-            X.val[i] = tmp % 10;
+            res = tmp / int(pow(10, C));
+            X.val[i] = tmp % int(pow(10, C));
         }
         int * bigger;
         if (size_ > other.size_)
@@ -133,8 +134,8 @@ BigInt BigInt::operator+(const BigInt& other){//O(max(n1,n2))
             bigger = other.val;
         for (int i = std::min(size_, other.size_); i < std::max(size_, other.size_); i++){
             tmp = bigger[i] + res;
-            res = tmp / 10;
-            X.val[i] = tmp % 10;
+            res = tmp / int(pow(10, C));
+            X.val[i] = tmp % int(pow(10, C));
         }
         if (res != 0)
             X.val[std::max(size_, other.size_)] = res;
@@ -170,8 +171,8 @@ BigInt BigInt::operator+(const BigInt& other){//O(max(n1,n2))
             }
             else{
                 tmp = -tmp;
-                res = tmp/10 + (tmp%10 != 0);
-                X.val[i] = 10 - tmp%10;
+                res = tmp / int(pow(10, C)) + ((tmp % int(pow(10, C))) != 0);
+                X.val[i] = int(pow(10, C)) - tmp % int(pow(10, C));
             }
         }
         for (int i = small->size_; i < bigg->size_; i++){
@@ -182,8 +183,8 @@ BigInt BigInt::operator+(const BigInt& other){//O(max(n1,n2))
             }
             else{
                 tmp = -tmp;
-                res = tmp/10 + (tmp%10 != 0);
-                X.val[i] = 10 - tmp%10;
+                res = tmp / int(pow(10, C)) + ((tmp % int(pow(10, C))) != 0);
+                X.val[i] = int(pow(10, C)) - tmp % int(pow(10, C));
             }
         }
         int cnt = 0;
@@ -215,14 +216,14 @@ BigInt BigInt::operator*(const BigInt& other){ //O(n1*(n1+n2))=O(n^2)
     for (int i = 0; i < size_; i++){
         for (int j = 0; j < other.size_; j++){
             tmp = (X.val[i + j]) + (val[i])*(other.val[j]) + res;
-            X.val[i+j] = tmp % 10;
-            res = tmp / 10;
+            X.val[i+j] = tmp % int(pow(10, C));
+            res = tmp / int(pow(10, C));
         }
         cnt = other.size_ + i;
         while(res != 0){
             tmp = (X.val[cnt]) + res;
-            X.val[cnt] = tmp % 10;
-            res = tmp / 10;
+            X.val[cnt] = tmp % int(pow(10, C));
+            res = tmp / int(pow(10, C));
             cnt += 1;
         }
     }

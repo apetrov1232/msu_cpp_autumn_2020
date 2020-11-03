@@ -6,7 +6,7 @@ int main(){
     if (X == -123)
         std::cout<<"OK 1"<<std::endl;
     else
-        std::cout<<"Wrong 1"<<std::endl;
+        std::cout<<"Wrong 1"<<" "<<X<<std::endl;
     //test2
     int z = 9;
     BigInt Y(567);
@@ -55,6 +55,13 @@ int main(){
         std::cout<<"OK 7"<<std::endl;
     else
         std::cout<<"Wrong 7"<<std::endl;
+    //test8
+    a = BigInt("111111111111111111111111111111111111111111111111111111111111");
+    b = BigInt("222222222222222222222222222222222222222222222222222222222220");
+    if ((a*2 - 2) == b)
+        std::cout<<"OK 8"<<std::endl;
+    else
+        std::cout<<"Wrong 8"<<std::endl;
 
     return 0;
 }

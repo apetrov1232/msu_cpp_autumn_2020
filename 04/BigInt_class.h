@@ -1,11 +1,16 @@
 #pragma once
 #include <iostream>
+#include <cmath>
+#include <string>
+#include <algorithm>
+
+const int C = 5;
 
 class BigInt{
 
 private:
 
-    int* val = nullptr;
+    int* val = nullptr; // value = val[0] * 10^(C*size_) + val[1] * 10^(C*(size_ - 1)) + ...
 
     int size_ = 0;
 
@@ -16,19 +21,34 @@ public:
     BigInt(){};
 
     BigInt(const std::string& s){
+        int tmp;
         if (s[0] == '-'){
             positive = false;
-            size_ = s.size() - 1;
+            size_ = (s.size() - 1) / C;
+            if (((s.size() - 1) % C) != 0)
+                size_ += 1;
             val = new int[size_];
-            for (int i = 0; i < size_; i++)
-                val[size_-1-i] = (s[i + 1] - '0');
+            for (int i = 0; i < size_; i++){
+                tmp = 0;
+                for (size_t j = 0; ((j < C) && (i*C + j < s.size() - 1)); j++){
+                    tmp = tmp + (s[s.size() -1 - i*C - j] - '0') * int(pow(10, j));
+                }
+                val[i] = tmp;
+            }
         }
         else{
             positive = true;
-            size_ = s.size();
+            size_ = s.size() / C;
+            if ((s.size() % C) != 0)
+                size_ += 1;
             val = new int[size_];
-            for (int i = 0; i < size_; i++)
-                val[size_-1-i] = (s[i] - '0');
+            for (int i = 0; i < size_; i++){
+                tmp = 0;
+                for (size_t j = 0; ((j < C) && (i*C + j < s.size())); j++){
+                    tmp = tmp + (s[s.size() -1 - i*C - j] - '0') * int(pow(10, j));
+                }
+                val[i] = tmp;
+            }
         }
     }
 
@@ -46,18 +66,17 @@ public:
         }
         int tmp = z*x;
         int len = 0;
-        while(tmp != 0){
-            tmp /= 10;
+        while(tmp!= 0){
+            tmp /= int(pow(10, C));
             len += 1;
         }
-
         size_ = len;
         val = new int[len];
         tmp = z*x;
         len = 0;
         while(tmp != 0){
-            val[len] = tmp%10;
-            tmp /= 10;
+            val[len] = tmp % int(pow(10, C));
+            tmp /= int(pow(10, C));
             len += 1;
         }
     }
