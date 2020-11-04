@@ -4,7 +4,7 @@
 #include <string>
 #include <algorithm>
 
-const int C = 5;
+const int C = 4;
 
 class BigInt{
 
@@ -143,7 +143,7 @@ public:
 
     BigInt operator*(const int x);
 
-    friend std::ostream& operator<<(std::ostream& ostream, const BigInt& x);
+    BigInt operator-() const;
 
-    friend BigInt operator-(const BigInt& x);
+    friend std::ostream& operator<<(std::ostream& ostream, const BigInt& x);
 };

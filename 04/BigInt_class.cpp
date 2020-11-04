@@ -247,13 +247,24 @@ BigInt BigInt::operator*(const int x){
 std::ostream& operator<<(std::ostream& ostream, const BigInt& x){
     if (!x.positive)
         ostream<<'-';
-    for (int i = x.size_ - 1; i >=0; i--)
+    ostream<<x.val[x.size_ - 1];
+    int cnt,tmp;
+    for (int i = x.size_ - 2; i >=0; i--){
+        tmp = x.val[i];
+        cnt = 0;
+        while (tmp != 0){
+            cnt++;
+            tmp /= 10;
+        }
+        for (int j = 0; j <= x.size_ - cnt; j++)
+            ostream<<0;
         ostream<<x.val[i];
+    }
     return ostream;
 };
 
-BigInt operator-(const BigInt& x){
-    BigInt X(x);
+BigInt BigInt::operator-() const{
+    BigInt X = *this;
     X.positive = !(X.positive);
     return X;
 };

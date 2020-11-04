@@ -62,6 +62,12 @@ int main(){
         std::cout<<"OK 8"<<std::endl;
     else
         std::cout<<"Wrong 8"<<std::endl;
-
+    //test9
+    a = BigInt("99999999999999999999999");
+    b = BigInt("99999999999999999999999");
+    if (a*b  == BigInt("9999999999999999999999800000000000000000000001"))
+        std::cout<<"OK 9"<<std::endl;
+    else
+        std::cout<<"Wrong 9"<<a*b<<std::endl;
     return 0;
 }
