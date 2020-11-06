@@ -256,7 +256,7 @@ std::ostream& operator<<(std::ostream& ostream, const BigInt& x){
             cnt++;
             tmp /= 10;
         }
-        for (int j = 0; j <= x.size_ - cnt; j++)
+        for (int j = 0; j < C - cnt; j++)
             ostream<<0;
         ostream<<x.val[i];
     }
