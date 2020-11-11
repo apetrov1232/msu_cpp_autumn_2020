@@ -17,16 +17,13 @@ void Serializer::operator()(ArgsT... args){
 
 template <typename... ArgsT>
 void Serializer::process(bool t, ArgsT... args){
-    if (t == true)
-        this->out_<<sep<<"true";
-    else
-        this->out_<<sep<<"false";
+    process(t);
     process(args...);
 }
 
 template <typename... ArgsT>
 void Serializer::process(uint64_t t, ArgsT... args){
-    this->out_<<sep<<std::to_string(t);
+    process(t);
     process(args...);
 }
 
@@ -54,25 +51,17 @@ Error Deserializer::operator()(ArgsT&... args){
 
 template <typename... ArgsT>
 Error Deserializer::process(bool& t, ArgsT&... args){
-    std::string x;
-    if (!(this->in_>>x))
-        return Error::CorruptedArchive;
-    if ((x == "true") || (x == "false"))
-        t = (x == "true");
-    else
-        return Error::CorruptedArchive;
+    Error err = process(t);
+    if (err != Error::NoError)
+        return err;
     return process(args...);
 }
 
 template <typename... ArgsT>
 Error Deserializer::process(uint64_t& t, ArgsT&... args){
-    std::string x;
-    if (!(this->in_>>x))
-        return Error::CorruptedArchive;
-    if (isDigit(x.c_str()))
-        t = stoull(x);
-    else
-        return Error::CorruptedArchive;
+    Error err = process(t);
+    if (err != Error::NoError)
+        return err;
     return process(args...);
 }
 
@@ -89,12 +78,12 @@ Error Deserializer::process(bool& t){
 
 Error Deserializer::process(uint64_t& t){
     std::string x;
-    std::string sep;
     if (!(this->in_>>x))
         return Error::CorruptedArchive;
-    if (isDigit(x.c_str()))
+    try{
         t = stoull(x);
-    else
+    } catch(...){
         return Error::CorruptedArchive;
+    }
     return Error::NoError;
 }
