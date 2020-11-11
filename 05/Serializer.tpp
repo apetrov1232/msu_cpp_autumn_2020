@@ -1,10 +1,3 @@
-bool isDigit(const std::string& x){
-    for(size_t i = 0; i < x.size(); i++)
-        if (!(isdigit(x[i])))
-            return false;
-    return true;
-}
-
 template <typename T>
 void Serializer::save(T& object){
     object.serialize(*this);
