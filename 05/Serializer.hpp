@@ -7,6 +7,8 @@ enum class Error{
     CorruptedArchive
 };
 
+bool isDigit(const std::string& x);
+
 class Serializer{
     static constexpr char sep = ' ';
 
