@@ -18,7 +18,7 @@ std::string process(const std::string& s, const int i, const T& t){
             while (s[j] != '}'){
                 tmp += s[j];
                 if (isdigit(s[j]))
-                    val += (s[j] - '0');
+                    val = 10*val + (s[j] - '0');
                 else
                     throw WrongValueInBrackets();
                 j++;
@@ -26,7 +26,6 @@ std::string process(const std::string& s, const int i, const T& t){
                     throw IncorrectUsingBrackets();
             }
             if (val == i){
-                stream.str(std::string());
                 stream.clear();
                 stream<<t;
                 stream>>tmp;

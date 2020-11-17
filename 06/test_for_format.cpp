@@ -43,5 +43,11 @@ int main(){
         std::cout<<"OK 4"<<std::endl;
     else
         std::cout<<"Wrong 4"<<std::endl;
+    //test5
+    text = format("{10}{11}",0,1,2,3,4,5,6,7,8,9,"ABC", 2*3);
+    if (text == "ABC6")
+        std::cout<<"OK 5"<<std::endl;
+    else
+        std::cout<<"Wrong 5"<<std::endl;
     return 0;
 }

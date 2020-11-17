@@ -5,7 +5,7 @@
 class ErrorFormat: public std::exception
 {
 public:
-    const char* what() const noexcept{
+    virtual const char* what() const noexcept{
         return "Error with function Format";
     }
 };
@@ -13,7 +13,7 @@ public:
 class IncorrectUsingBrackets: public ErrorFormat
 {
 public:
-    const char* what() const noexcept{
+    virtual const char* what() const noexcept override{
         return "{} is used incorrect";
     }
 };
@@ -21,7 +21,7 @@ public:
 class WrongValueInBrackets: public ErrorFormat
 {
 public:
-    const char* what() const noexcept{
+    virtual const char* what() const noexcept override{
         return "Value don't fit to {}";
     }
 };
