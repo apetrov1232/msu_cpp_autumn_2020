@@ -20,26 +20,57 @@ class VectorIterator{
 
 public:
 
-    VectorIterator(T*& begin, const size_t Size, const bool r, const bool isBeg)
-        : isReserved(r){
+    VectorIterator(T*& begin, const size_t Size, const bool isreservedIter, const bool isbeginiter)
+        : isReserved(isreservedIter){
             T* begin_ = begin;
             T* end_ = begin_;
-            for (size_t i(0); i<Size; i++)
-                end_++;
-            if (r){
+            end_ = end_ + Size;
+            if (isreservedIter){
                 std::swap(begin_, end_);
                 begin_--;
                 end_--;
             }
-            if (isBeg)
+            if (isbeginiter)
                 current_ = begin_;
             else
                 current_ = end_;
         };
 
+    ~VectorIterator(){
+        current_ = nullptr;
+    };
+
+    VectorIterator(const VectorIterator& other ){
+        current_ = other.current_;
+        isReserved = other.isReserved;
+    };
+
+    VectorIterator(VectorIterator&& other ){
+        current_ = other.current_;
+        isReserved = other.isReserved;
+        other.current_ = nullptr;
+    };
+
+    VectorIterator& operator=(const VectorIterator& other ){
+        current_ = other.current_;
+        isReserved = other.isReserved;
+        return *this;
+    };
+
+    VectorIterator& operator=(VectorIterator&& other ){
+        if (*this == other)
+            return *this;
+        current_ = other.current_;
+        isReserved = other.isReserved;
+        other.current_ = nullptr;
+        return *this;
+    };
+
     T operator*() const;
 
     void operator++();
+
+    VectorIterator<T>  operator+(const size_t cnt);
 
     bool operator==(const VectorIterator& other) const;
 
@@ -70,14 +101,47 @@ public:
         alc.deallocate(data);
     };
 
+    Vector(const Vector& other ){
+        data = std::copy(other.data);
+        Size = other.Size;
+        Capacity = other.Capacity;
+    };
+
+    Vector(Vector&& other ){
+        data = other.data;
+        other.data = nullptr;
+        Size = other.Size;
+        Capacity = other.Capacity;
+    };
+
+    Vector& operator=(const Vector& other ){
+        data = std::copy(other.data);
+        Size = other.Size;
+        Capacity = other.Capacity;
+        return *this;
+    };
+
+    Vector& operator=(Vector&& other ){
+        if (*this == other)
+            return *this;
+        data = std::copy(other.data);
+        Size = other.Size;
+        Capacity = other.Capacity;
+        alc = other.alc;
+        other.data = nullptr;
+        return *this;
+    };
+
     T& operator[](const size_t i);
 
-    void push_back(const T x);
+    void push_back(const T& x);
+
+    void push_back(T&& x);
 
     void pop_back();
 
     template<typename... ArgsT>
-    void emplace_back(const ArgsT&... args);
+    void emplace_back(ArgsT&&... args);
 
     bool empty();
 

@@ -6,7 +6,8 @@ T* Allocator<T>::allocate(size_t cnt){
 
 template <typename T>
 void Allocator<T>::deallocate(T* ptr){
-    delete[] ptr;
+    if (ptr != nullptr)
+        delete[] ptr;
 };
 
 
@@ -27,8 +28,21 @@ void VectorIterator<T>::operator++(){
 }
 
 template <typename T>
+VectorIterator<T> VectorIterator<T>::operator+(const size_t cnt){
+    VectorIterator<T> cur = current_;
+    for (size_t i(0); i<cnt; i++)
+    if (isReserved){
+        cur--;
+    }
+    else{
+        cur++;
+    }
+    return cur;
+};
+
+template <typename T>
 bool VectorIterator<T>::operator==(const VectorIterator& other) const{
-    return (current_ == other.current_);
+    return (*current_ == *(other.current_));
 }
 
 template <typename T>
@@ -56,12 +70,22 @@ T& Vector<T, Alloc>::operator[](const size_t i){
 }
 
 template<typename T, typename Alloc>
-void Vector<T, Alloc>::push_back(const T x){
+void Vector<T, Alloc>::push_back(const T& x){
     if (Size == Capacity){
-        Capacity *= 2;
+        Capacity = (Size + 1)*2;
         transportdata();
     }
     data[Size] = x;
+    Size += 1;
+}
+
+template<typename T, typename Alloc>
+void Vector<T, Alloc>::push_back(T&& x){
+    if (Size == Capacity){
+        Capacity = (Size + 1)*2;
+        transportdata();
+    }
+    data[Size] = std::move(x);
     Size += 1;
 }
 
@@ -78,7 +102,7 @@ void Vector<T, Alloc>::pop_back(){
 
 template<typename T, typename Alloc>
 template<typename... ArgsT>
-void Vector<T, Alloc>::emplace_back(const ArgsT&... args){
+void Vector<T, Alloc>::emplace_back(ArgsT&&... args){
     if (Size == Capacity){
         Capacity *= 2;
         transportdata();

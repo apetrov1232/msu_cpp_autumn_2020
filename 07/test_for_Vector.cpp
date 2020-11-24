@@ -15,19 +15,19 @@ int main(){
         std::cout<<"Wrong 2"<<std::endl;
     //test3
     x.push_back('d');
-    if ((x[10] == 'd') && (x.size() == 11) && (x.capacity() == 20))
+    if ((x[10] == 'd') && (x.size() == 11) && (x.capacity() == 22))
         std::cout<<"OK 3"<<std::endl;
     else
         std::cout<<"Wrong 3"<<std::endl;
     //test4
     x.pop_back();
-    if ((x.size() == 10) && (x.capacity() == 20))
+    if ((x.size() == 10) && (x.capacity() == 22))
         std::cout<<"OK 4"<<std::endl;
     else
         std::cout<<"Wrong 4"<<std::endl;
     //test5
     x.emplace_back('e');
-    if ((x[10] == 'e') && (x.size() == 11) && (x.capacity() == 20))
+    if ((x[10] == 'e') && (x.size() == 11) && (x.capacity() == 22))
         std::cout<<"OK 5"<<std::endl;
     else
         std::cout<<"Wrong 5"<<std::endl;
@@ -68,5 +68,13 @@ int main(){
         std::cout<<"OK 10"<<std::endl;
     else
         std::cout<<"Wrong 10"<<std::endl;
+    //test11
+    x.clear();
+    char h = 'h';
+    x.push_back(std::move(h));
+    if (x[0] == 'h')
+        std::cout<<"OK 11"<<std::endl;
+    else
+        std::cout<<"Wrong 11"<<std::endl;
     return 0;
 }
