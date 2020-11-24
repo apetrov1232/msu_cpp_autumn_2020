@@ -70,7 +70,7 @@ public:
 
     void operator++();
 
-    VectorIterator<T>  operator+(const size_t cnt);
+    VectorIterator&  operator+(const size_t cnt);
 
     bool operator==(const VectorIterator& other) const;
 
