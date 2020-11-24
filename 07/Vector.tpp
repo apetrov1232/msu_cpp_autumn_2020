@@ -28,7 +28,7 @@ void VectorIterator<T>::operator++(){
 }
 
 template <typename T>
-VectorIterator<T> VectorIterator<T>::operator+(const size_t cnt){
+VectorIterator<T>& VectorIterator<T>::operator+(const size_t cnt){
     VectorIterator<T> cur = current_;
     for (size_t i(0); i<cnt; i++)
     if (isReserved){
