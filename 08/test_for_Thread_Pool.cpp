@@ -14,7 +14,7 @@ struct A {};
 void foo(const A&) {};
 
 int main() {
-    ThreadPool p = ThreadPool(8);
+    ThreadPool p(8);
     std::this_thread::sleep_for(std::chrono::seconds(1));
     //test1
     try{
@@ -24,7 +24,7 @@ int main() {
         task2.get();
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
-    catch(std::exception){
+    catch(std::future_error){
         std::cout<<"Wrong 1"<<std::endl;
         return 0;
     }
@@ -44,11 +44,11 @@ int main() {
     else
         std::cout<<"OK 2"<<std::endl;
     //test3
-    p = ThreadPool(2);
-    auto ans1 = p.exec(foo2, 1);
-    auto ans2 = p.exec(foo2, 2);
-    auto ans3 = p.exec(foo2, 3); //when all threads are busy then tasks will wait in queue
-    auto ans4 = p.exec(foo2, 4);
+    ThreadPool p2(2);
+    auto ans1 = p2.exec(foo2, 1);
+    auto ans2 = p2.exec(foo2, 2);
+    auto ans3 = p2.exec(foo2, 3); //when all threads are busy then tasks will wait in queue
+    auto ans4 = p2.exec(foo2, 4);
     if ((ans1.get() == "number of task is 1") && (ans2.get() == "number of task is 2")
         && (ans3.get() == "number of task is 3") && (ans4.get() == "number of task is 4"))
         std::cout<<"OK 3";

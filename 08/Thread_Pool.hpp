@@ -22,10 +22,10 @@ class ThreadPool{
 
 public:
 
-    explicit ThreadPool(size_t poolSize = std::thread::hardware_concurrency()){
+    ThreadPool(size_t poolSize = std::thread::hardware_concurrency()){
         this->poolSize = poolSize;
         for (size_t i(0); i < poolSize; i++){
-            std::thread t(process, this, i);
+            std::thread t(&ThreadPool::process, this, i);
             t.detach();
         }
     }
@@ -35,34 +35,34 @@ public:
         this->m.lock();
         this->work = false;
         this->m.unlock();
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         this->next.notify_all();
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(2));
     }
 
     //it is some incorrect for ThreadPool to use copy/move constructor or operator=
     ThreadPool(const ThreadPool& other){
         for (size_t i(0); i < other.poolSize; i++){
-            std::thread t(process, this, i);
+            std::thread t(&ThreadPool::process, this, i);
             t.detach();
         }
     };
     ThreadPool(ThreadPool&& other) noexcept{
         for (size_t i(0); i < other.poolSize; i++){
-            std::thread t(process, this, i);
+            std::thread t(&ThreadPool::process, this, i);
             t.detach();
         }
     };
     ThreadPool& operator=(const ThreadPool& other){
         for (size_t i(0); i < other.poolSize; i++){
-            std::thread t(process, this, i);
+            std::thread t(&ThreadPool::process, this, i);
             t.detach();
         }
         return (*this);
     };
     ThreadPool& operator=(ThreadPool&& other) noexcept{
         for (size_t i(0); i < other.poolSize; i++){
-            std::thread t(process, this, i);
+            std::thread t(&ThreadPool::process, this, i);
             t.detach();
         }
         return (*this);
