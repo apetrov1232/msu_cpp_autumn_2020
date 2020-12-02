@@ -3,9 +3,8 @@
 
 void ThreadPool::process(size_t i){
     while (this->work){
-        std::mutex cv;
-        std::unique_lock<std::mutex> lk(cv);
-        while (this->Size == 0){
+        std::unique_lock<std::mutex> lk(this->cv);
+        while ((this->Size == 0) && (this->work)){
             this->next.wait(lk);
         }
         this->m.lock();

@@ -15,7 +15,6 @@ void foo(const A&) {};
 
 int main() {
     ThreadPool p(8);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
     //test1
     try{
         auto task1 = p.exec(foo, A());
@@ -24,7 +23,7 @@ int main() {
         task2.get();
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
-    catch(std::future_error){
+    catch(std::future_error&){
         std::cout<<"Wrong 1"<<std::endl;
         return 0;
     }
@@ -39,7 +38,7 @@ int main() {
     t3.get();
     unsigned int end_time = clock();
     unsigned int search_time = end_time - start_time;
-    if (search_time > 3000) //summary time without threads = 6000 milliseconds
+    if (search_time > 3*CLOCKS_PER_SEC ) //summary time without threads = 6 seconds
         std::cout<<"Wrong 2"<<std::endl;
     else
         std::cout<<"OK 2"<<std::endl;
