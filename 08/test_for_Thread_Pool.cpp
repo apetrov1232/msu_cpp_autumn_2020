@@ -33,6 +33,7 @@ int main() {
     auto t1 = p.exec(foo1);
     auto t2 = p.exec(foo1);
     auto t3 = p.exec(foo1);
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     t1.get();
     t2.get();
     t3.get();

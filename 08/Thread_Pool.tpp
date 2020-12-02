@@ -3,10 +3,12 @@
 
 void ThreadPool::process(size_t i){
     while (this->work){
-        std::unique_lock<std::mutex> lk(this->cv);
-        while ((this->Size == 0) && (this->work)){
-            this->next.wait(lk);
+        {
+            std::unique_lock<std::mutex> lk(this->cv);
+            while ((this->Size == 0) && (this->work))
+                this->next.wait(lk);
         }
+
         this->m.lock();
         if (this->Size == 0){
             this->m.unlock();
@@ -16,6 +18,7 @@ void ThreadPool::process(size_t i){
         auto task = ((std::future<void>*)this->Queue.front());
         (this->Queue).pop();
         this->m.unlock();
+
         if ((*task).valid()) //may be task was done from main before from that thread
             (*task).wait();
     }
